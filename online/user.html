@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Blocked</title>
+  </head>
+  <body>
+    <h1>Hey there, you can't access this site.</h1>
+    <h2>You need a Chromebook to access this site.</h2>
+    <hr>
+    <h2>Try a password:</h2>
+    <input id="passinput" placeholder="password"><button onclick="
+window.location.replace(document.location.origin + '/?pass=' + document.getElementById('passinput').value)">Submit</button><br><br>
+    <small>If you put in a password and you got redirected here, the password is wrong.</small>
+  </body>
+</html>
