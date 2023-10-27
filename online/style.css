@@ -31,7 +31,7 @@
   position: fixed;
   right: 50%;
   top: 12.5%;
-  z-index: 99999;
+  z-index: 99998;
   transform: translate(-50%, -50%);
   width: 450px;
   height: 100px;
@@ -127,6 +127,7 @@ h1 span {
 }
 
 .cursor {
+  z-index: 99999;
   width: 50px;
   height: 50px;
   border-radius: 100%;
@@ -140,6 +141,7 @@ h1 span {
 }
 
 .cursor2 {
+  z-index: 99999;
   width: 20px;
   height: 20px;
   border-radius: 100%;
@@ -152,6 +154,7 @@ h1 span {
 }
 
 .cursorinnerhover {
+  z-index: 99999;
   width: 50px;
   height: 50px;
   opacity: .5;
