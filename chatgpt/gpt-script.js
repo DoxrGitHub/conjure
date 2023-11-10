@@ -7,6 +7,7 @@ const deleteButton = document.querySelector("#delete-btn");
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
 let conversationHistory = [];
+let systemPrompt = {"role": "system", "content": "Try to keep conversations short and to the point."};
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
@@ -15,10 +16,10 @@ const loadDataFromLocalstorage = () => {
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small>v2</small></h1>
+                            <h1>DoxrGPT <small><small>v2.5</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
-
+    conversationHistory.push(systemPrompt);
     chatContainer.innerHTML = defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 }
@@ -111,9 +112,10 @@ const handleOutgoingChat = () => {
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
     setTimeout(showTypingAnimation, 500);
  }
- 
+
  deleteButton.addEventListener("click", () => {
     if(confirm("Are you sure you want to delete all the chats?")) {
+        conversationHistory = [systemPrompt];
         loadDataFromLocalstorage();
     }
  });
