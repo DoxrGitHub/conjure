@@ -6,6 +6,7 @@ const deleteButton = document.querySelector("#delete-btn");
 
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
+let conversationHistory = [];
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
@@ -14,7 +15,7 @@ const loadDataFromLocalstorage = () => {
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT</h1>
+                            <h1>DoxrGPT <small>v2</small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
 
@@ -50,6 +51,9 @@ const getChatResponse = async (incomingChatDiv) => {
     try {
         const response = await (await fetch(API_URL, requestOptions)).json();
         pElement.textContent = response.choices[0].message.content.trim();
+ 
+        // Add assistant's message to conversation history
+        conversationHistory.push(response.choices[0].message);
     } catch (error) {
         pElement.classList.add("error");
         pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
@@ -87,49 +91,57 @@ const showTypingAnimation = () => {
 const handleOutgoingChat = () => {
     userText = chatInput.value.trim();
     if(!userText) return;
-
+ 
+    // Add user's message to conversation history
+    conversationHistory.push({role: "user", content: userText});
+ 
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
-
+ 
     const html = `<div class="chat-content">
-                    <div class="chat-details">
-                        <img src="user.jpg" alt="user-img">
-                        <p>${userText}</p>
-                    </div>
+                   <div class="chat-details">
+                       <img src="user.jpg" alt="user-img">
+                       <p>${userText}</p>
+                   </div>
                 </div>`;
-
+ 
     const outgoingChatDiv = createChatElement(html, "outgoing");
     chatContainer.querySelector(".default-text")?.remove();
     chatContainer.appendChild(outgoingChatDiv);
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
     setTimeout(showTypingAnimation, 500);
-}
-
-deleteButton.addEventListener("click", () => {
+ }
+ 
+ deleteButton.addEventListener("click", () => {
     if(confirm("Are you sure you want to delete all the chats?")) {
         loadDataFromLocalstorage();
     }
-});
-
-themeButton.addEventListener("click", () => {
+ });
+ 
+ themeButton.addEventListener("click", () => {
     document.body.classList.toggle("light-mode");
     localStorage.setItem(themeButton.innerText);
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
-});
-
-const initialInputHeight = chatInput.scrollHeight;
-
-chatInput.addEventListener("input", () => {   
-    chatInput.style.height =  `${initialInputHeight}px`;
+ });
+ 
+ const initialInputHeight = chatInput.scrollHeight;
+ 
+ chatInput.addEventListener("input", () => {  
+    chatInput.style.height = `${initialInputHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
-});
-
-chatInput.addEventListener("keydown", (e) => {
+ });
+ 
+ chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
         e.preventDefault();
         handleOutgoingChat();
     }
-});
-
-loadDataFromLocalstorage();
-sendButton.addEventListener("click", handleOutgoingChat);
+ });
+ 
+ const fetchConversationHistory = () => {
+    // Send conversationHistory array to wherever you need it
+    console.log(conversationHistory);
+ }
+ 
+ loadDataFromLocalstorage();
+ sendButton.addEventListener("click", handleOutgoingChat);
