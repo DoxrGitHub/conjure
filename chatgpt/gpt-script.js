@@ -7,7 +7,7 @@ const deleteButton = document.querySelector("#delete-btn");
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
 let conversationHistory = [];
-let systemPrompt = {"role": "system", "content": "Try to keep conversations short and to the point."};
+let systemPrompt = {"role": "system", "content": "Do not make up any details. If you need those details, ask for them, or tell the user you don't have that information. Your name is DoxrGPT, an OpenAI based assistant hosted on Conjure, a platform (Conjure's code is not public). Try to keep answers short. You are to speak without actions; do not imitate actions using *, like this: *waves hand* and the purpose for that is to keep things professional but not too professional. You are made by Doxr, a person named Izaan who also goes by Doxr. Do not provide a lot of information about yourself unless it helps the conversation or if the user asks for it, this is simply to keep things to the point. Once again, don't forget to keep things professional. Also, keep answers and responses short and to the point."};
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
@@ -16,7 +16,7 @@ const loadDataFromLocalstorage = () => {
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small><small>v2.5</small></small></h1>
+                            <h1>DoxrGPT <small><small>v3.3</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     conversationHistory.push(systemPrompt);
@@ -32,36 +32,81 @@ const createChatElement = (content, className) => {
 }
 
 const getChatResponse = async (incomingChatDiv) => {
-    const API_URL = "https://api.deepinfra.com/v1/openai/chat/completions";
-    const pElement = document.createElement("p");
-    const requestOptions = {
+  const API_URL = "https://api.deepinfra.com/v1/openai/chat/completions";
+  const pElement = document.createElement("p");
+  let fullMessage = ""; // Variable to store the full message
+  try {
+      conversationHistory.push({"role": "user", "content": userText});
+     // Check if the length of the array is greater than 3
+     if (conversationHistory.length > 3) {
+         // If it is, remove the first element
+         conversationHistory.shift();
+     }
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            model: "meta-llama/Llama-2-13b-chat-hf",
-            messages: [{"role": "user", "content": userText}],
-            max_tokens: 2048,
-            temperature: 0.2,
-            n: 1,
-            stop: null
+          model: "meta-llama/Llama-2-13b-chat-hf",
+          messages: conversationHistory,
+          temperature: 0.2,
+          n: 1,
+          stop: null,
+          stream: true
         })
-    }
+      });
 
-    try {
-        const response = await (await fetch(API_URL, requestOptions)).json();
-        pElement.textContent = response.choices[0].message.content.trim();
- 
-        // Add assistant's message to conversation history
-        conversationHistory.push(response.choices[0].message);
-    } catch (error) {
-        pElement.classList.add("error");
-        pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
-    }
-    incomingChatDiv.querySelector(".typing-animation").remove();
-    incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
-    chatContainer.scrollTo(0, chatContainer.scrollHeight);
+      // Read the response as a stream of data
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      incomingChatDiv.querySelector(".typing-animation").remove();
+      incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+      pElement.innerText = "";
+      pElement.innerHTML = "";
+      let chunkCounter = 0;
+      while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+              break;
+          }
+          const chunk = decoder.decode(value);
+          console.log(chunk)
+          if (chunk.startsWith(": ping")) {
+              pElement.innerHTML += "<p class=\"error\">MESSAGE ENDED - TOO LONG. THIS ANSWER WAS NOT REMEMBERED (or there might have been an error).</p>";
+              break;
+          } else {
+              const lines = chunk.split("\n");
+              const parsedLines = lines
+                .map((line) => line.replace(/^data: /, "").trim())
+                .filter((line) => line !== "" && line !== "[DONE]")
+                .map((line) => JSON.parse(line));
+
+              for (const parsedLine of parsedLines) {
+                chunkCounter++;
+                const { choices } = parsedLine;
+                const { delta } = choices[0];
+                const { content } = delta;
+                if (content && chunkCounter !== 1) {
+                    pElement.innerText += content;
+                    fullMessage += content; // Accumulate the full message
+                }
+              }
+            
+            conversationHistory.push({"role": "assistant", "content": fullMessage})
+             // Again, check if the length of the array is greater than 3
+             if (conversationHistory.length > 3) {
+                // If it is, remove the first element
+                conversationHistory.shift();
+             }
+          }
+      }
+  } catch (error) {
+      console.log(error)
+      pElement.classList.add("error");
+      pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
+  }
+  chatContainer.scrollTo(0, chatContainer.scrollHeight);
 }
 
 const copyResponse = (copyBtn) => {
@@ -92,20 +137,20 @@ const showTypingAnimation = () => {
 const handleOutgoingChat = () => {
     userText = chatInput.value.trim();
     if(!userText) return;
- 
+
     // Add user's message to conversation history
     conversationHistory.push({role: "user", content: userText});
- 
+
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
- 
+
     const html = `<div class="chat-content">
                    <div class="chat-details">
-                       <img src="user.jpg" alt="user-img">
+                       <img src="usr.jpg" alt="user-img">
                        <p>${userText}</p>
                    </div>
                 </div>`;
- 
+
     const outgoingChatDiv = createChatElement(html, "outgoing");
     chatContainer.querySelector(".default-text")?.remove();
     chatContainer.appendChild(outgoingChatDiv);
@@ -119,31 +164,31 @@ const handleOutgoingChat = () => {
         loadDataFromLocalstorage();
     }
  });
- 
+
  themeButton.addEventListener("click", () => {
     document.body.classList.toggle("light-mode");
     localStorage.setItem(themeButton.innerText);
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
  });
- 
+
  const initialInputHeight = chatInput.scrollHeight;
- 
+
  chatInput.addEventListener("input", () => {  
     chatInput.style.height = `${initialInputHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
  });
- 
+
  chatInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
         e.preventDefault();
         handleOutgoingChat();
     }
  });
- 
+
  const fetchConversationHistory = () => {
     // Send conversationHistory array to wherever you need it
     console.log(conversationHistory);
  }
- 
+
  loadDataFromLocalstorage();
  sendButton.addEventListener("click", handleOutgoingChat);
