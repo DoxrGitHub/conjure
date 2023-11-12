@@ -7,7 +7,6 @@ const deleteButton = document.querySelector("#delete-btn");
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
 let conversationHistory = [];
-let systemPrompt = {"role": "system", "content": "Do not make up any details. If you need those details, ask for them, or tell the user you don't have that information. Your name is DoxrGPT, an OpenAI based assistant hosted on Conjure, a platform (Conjure's code is not public). Try to keep answers short. You are to speak without actions; do not imitate actions using *, like this: *waves hand* and the purpose for that is to keep things professional but not too professional. You are made by Doxr, a person named Izaan who also goes by Doxr. Do not provide a lot of information about yourself unless it helps the conversation or if the user asks for it, this is simply to keep things to the point. Once again, don't forget to keep things professional. Also, keep answers and responses short and to the point."};
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
@@ -19,7 +18,6 @@ const loadDataFromLocalstorage = () => {
                             <h1>DoxrGPT <small><small>v3.3</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
-    conversationHistory.push(systemPrompt);
     chatContainer.innerHTML = defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 }
