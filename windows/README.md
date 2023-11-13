@@ -27,7 +27,7 @@ For the first time, you will need to sign up. After that, everything should be s
 3. The password is exactly `pass@word1`
 4. Open the Edge Browser!
 
-## Getting a VPN - fully unblock the browser
+## Getting a VPN - fully unbl-ck the browser
 
 1. In the laptop in Edge, search up "Edge Addons"
 2. In Edge Addons, search for "free VPN"
