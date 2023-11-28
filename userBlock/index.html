@@ -1,14 +1,41 @@
 <html>
-  <head>
-    <title>Blocked</title>
-  </head>
-  <body>
-    <h1>Hey there, you can't access this site.</h1>
-    <h2>You need a Chromebook to access this site.</h2>
+<head>
+    <title>Access Blocked</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        h1 {
+            color: red;
+        }
+        #passinput {
+            margin-top: 20px;
+        }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+<script>
+    function validatePassword() {
+        var passInput = document.getElementById('passinput').value;
+        if(passInput === "") {
+            alert("Please enter a password");
+        } else {
+            var hashedPassword = CryptoJS.SHA256(passInput).toString();
+            window.location.replace(document.location.origin + '/?pass=' + hashedPassword);
+        }
+    }
+</script>
+</head>
+<body>
+    <noscript><small>JavaScript isn't enabled for you. Password override will not work until JavaScript is enabled.</small></noscript>
+    <h1>400 - Access Blocked</h1>
+    <h2>Error: You are not authorized to access this page.</h2>
     <hr>
-    <h2>Try a password:</h2>
-    <input id="passinput" placeholder="password"><button onclick="
-window.location.replace(document.location.origin + '/?pass=' + document.getElementById('passinput').value)">Submit</button><br><br>
-    <small>If you put in a password and you got redirected here, the password is wrong.</small>
-  </body>
+    <h2>To override this block, please enter the correct password.</h2>
+    <p>If you enter your password but still get redirected here, you entered the wrong password. Please try again.</p>
+    <input id="passinput" placeholder="password">
+    <button onclick="validatePassword()">Submit</button>
+</body>
 </html>
