@@ -1,0 +1,13 @@
+if (urlParams.get('pass') !== 'dade3a08d958d99324bd10b62d77209b90fce3b38a1b50d46c01de30abb51a78') {
+  if (localStorage.getItem('foreignAuth') === null){
+  if (/\bCrOS\b/.test(navigator.userAgent)) {
+} else {
+    window.location.replace(document.location.origin + "/userBlock");
+}}}
+
+if (urlParams.get('pass') === 'dade3a08d958d99324bd10b62d77209b90fce3b38a1b50d46c01de30abb51a78') {
+  if (localStorage.getItem("foreignAuth") === null) {
+    localStorage.setItem("foreignAuth", "true");
+  }
+  window.location.replace(document.location.origin);
+}
