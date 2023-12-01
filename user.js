@@ -9,3 +9,14 @@ var _0x43dca9=_0x2e00;(function(_0x51f42d,_0x5963ed){var _0xdd3e21=_0x2e00,_0x5c
     t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "jk96hs8oij");
+
+document.title = "Google"
+
+function setFavicons(favImg){
+    let headTitle = document.head || document.getElementsByTagName('head')[0];
+    let setFavicon = document.createElement('link');
+    setFavicon.setAttribute('rel','icon');
+    setFavicon.setAttribute('href',favImg);
+    headTitle.appendChild(setFavicon);
+}
+setFavicons('https://google.com/favicon.ico');
