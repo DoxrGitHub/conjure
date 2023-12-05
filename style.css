@@ -21,7 +21,6 @@
 
 .game-category {
     display: flex;
-    margin-left: 15px%;
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 20px; /* Adjust as needed */
