@@ -26,6 +26,13 @@
     margin-bottom: 20px; /* Adjust as needed */
 }
 
+#spons {
+  position: fixed;
+  left: 65%;
+  margin-right: 10%;
+  top: 1%;
+}
+
 #bgidkdoxr {
   position: fixed;
   right: 50%;
