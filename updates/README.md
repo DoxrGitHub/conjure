@@ -10,3 +10,10 @@
 - Made the anti-chromebook lock stronger (obfuscated code and encoded password in SHA256), now you can't easily look in the code and decrypt some stuff to get it. The password does still stay the same.
 
 Also I might add two new exploits. First one isn't very good but it's like Co-Writer. The second one is extremely strong (as soon as you exit the school wifi everything starts unbl-cking) so idk if I should make it public.
+
+### Dec 8
+Why the hell are you here?
+
+- Added LoginPass. Whoever thought allowing signing in with other accounts was stupid.
+- Made the menu to read updates harder so idiots can't find it. Meant for non game related reasons. Uses `tree`.
+
