@@ -16,4 +16,6 @@ Why the hell are you here?
 
 - Added LoginPass. Whoever thought allowing signing in with other accounts was stupid.
 - Made the menu to read updates harder so idiots can't find it. Meant for non game related reasons. Uses `tree`.
+- Doxrform, somewhat insecure but I know yall are too stupid to reverse the site. Don't even lie.
 
+I might add a secret gif of Shrek getting sturdy and if you find it I'll give you my secret method to unblock *everything* as soon has you get home (this is not a lie. I have such a method.) without you having to press a single button.
