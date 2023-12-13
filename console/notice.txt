@@ -1,0 +1,18 @@
+So Conjure is starting to become blocked. You can go to https://mtrx.2100coins.com and ask me for an unblocked link, it might be blocked though still. Here's how you make your own version of Conjure.
+You *will* have to do this once in a while or else you'll be stuck with an old version of Conjure.
+
+Please don't be stupid, this is really easy to do.
+
+1. Go to https://glitch.com
+2. Sign up using Google
+3. Once your in the main page again, click New project and Import from GitHub
+4. Put in this url:
+
+https://github.com/DoxrGitHub/conjure.git
+
+5. Wait until it's done loading.
+6. You'll see the link to your unblocked version of Conjure to the right, copy the url and go to it. OR in the bottom there will be buttons, choose "Preview" and then choose "Preview in a new window"
+
+Now you have your own version of Conjure. If the games get blocked, go to https://mtrx.2100coins.com or if that is blocked email this email: email@doxr.cloudns.ph if you really need to (at this point learn coding and unblock it yourself.)
+
+- Doxr
