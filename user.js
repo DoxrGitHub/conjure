@@ -2,6 +2,18 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 console.log(window.location.href)
 
+if (urlParams.get('block') || urlParams.get('blocked')) {
+    window.location.href = 'https://en.wikipedia.org/wiki/HTTP_403';
+    if (localStorage.getItem("blocked") === null) {
+        localStorage.setItem("blocked", "true")
+    }
+}
+
+if (localStorage.getItem("blocked") !== null) {
+    window.location.href = 'https://en.wikipedia.org/wiki/HTTP_403';
+}
+
+
 function _0x5329(_0x16f1de, _0xe7b296) {
     var _0x399081 = _0x1a8d();
     return _0x5329 = function (_0xa915db, _0x2c0069) {
