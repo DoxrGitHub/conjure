@@ -12,7 +12,7 @@ if (urlParams.get('block') !== null) {
 }
 
 if (localStorage.getItem("blocked") !== null) {
-    window.location.href = 'https://en.wikipedia.org/wiki/HTTP_403';
+    window.location.replace = 'https://en.wikipedia.org/wiki/HTTP_403';
 }
 
 
