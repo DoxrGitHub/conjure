@@ -2,8 +2,10 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 console.log(window.location.href)
 
-if (urlParams.get('block') || urlParams.get('blocked')) {
-    window.location.href = 'https://en.wikipedia.org/wiki/HTTP_403';
+console.log(urlParams.get('block'))
+
+if (urlParams.get('block') !== null) {
+    window.location.replace = 'https://en.wikipedia.org/wiki/HTTP_403';
     if (localStorage.getItem("blocked") === null) {
         localStorage.setItem("blocked", "true")
     }
