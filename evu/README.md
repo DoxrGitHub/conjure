@@ -14,7 +14,7 @@ Ex:
 
 2. Press CTRL+P to bring up the printing page. Set pages to "All" and Layout to "Landscape." Also, copy these settings down below as well. This will create a lot of lag, and you won't be able to open sites right now.
 
-<img src="idk.png>
+<img src="idk.png">
 
 **Make sure that you copied all of those settings.**
 
