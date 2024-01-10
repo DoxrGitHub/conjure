@@ -24,6 +24,6 @@ Ex:
 
 `chrome://extensions/?id=adkcpkpghahmbopkjchobieckeoaoeem`
 
-5. Scroll down until you see `Allow access to file URLs` and flip the switch thing next to it, and then do it again so the switch isn't blue anymore.'
+5. Scroll down until you see `Allow access to file URLs` and flip the switch thing next to it, and then do it again so the switch isn't blue anymore.
 
 6. If you did everything correctly, the old page closed but the new page is still open and it is still loading. Now your chromebook should be unblocked. You will feel a bit of lag but that's it. If you want to stop the exploit and go back to normal without lag, just enter `chrome://restart` in the place where you type URLs, and your chromebook will immediately restart.
