@@ -11,6 +11,7 @@ function fetchGamesAndCreateElements() {
         games.forEach(game => {
           // Create the outer div
           const div = document.createElement('div');
+          div.className = 'next';
           
           // Create the anchor element
           const anchor = document.createElement('a');
