@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SETTINGS>
+    <NAME>conjure</NAME>
+    <AUTHOR>doxr</AUTHOR>
+    <REQUIREMENTS>
+        <PERM>cspinline</PERM>
+    </REQUIREMENTS>
+</SETTINGS>
