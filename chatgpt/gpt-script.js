@@ -20,7 +20,7 @@ const loadDataFromLocalstorage = () => {
         conversationHistory.unshift(systemPrompt);
     }
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small><small>v3.5</small></small></h1>
+                            <h1>DoxrGPT <small><small>v3.6</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2 (70b)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     chatContainer.innerHTML = defaultText;
