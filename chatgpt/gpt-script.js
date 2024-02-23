@@ -85,6 +85,7 @@ const getChatResponse = async (incomingChatDiv) => {
                 const { choices } = parsedLine;
                 const { delta } = choices[0];
                 const { content } = delta;
+                pElement.innerText = '';
                 if (content && chunkCounter !== 1) {
                     pElement.innerText += content;
                     fullMessage += content; // Accumulate the full message
