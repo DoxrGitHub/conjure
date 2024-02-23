@@ -3,17 +3,22 @@ const sendButton = document.querySelector("#send-btn");
 const chatContainer = document.querySelector(".chat-container");
 const themeButton = document.querySelector("#theme-btn");
 const deleteButton = document.querySelector("#delete-btn");
-
+const systemPrompt = {
+    role: "system",
+    content: "Be a helpful assistant."
+};
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
-let conversationHistory = [];
+let conversationHistory = [systemPrompt];
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
 
     document.body.classList.toggle("light-mode", themeColor === "light_mode");
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
-
+    if (!conversationHistory[0] || conversationHistory[0].role !== "system") {
+        conversationHistory.unshift(systemPrompt);
+    }
     const defaultText = `<div class="default-text">
                             <h1>DoxrGPT <small><small>v3.5</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2 (70b)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
@@ -93,10 +98,9 @@ const getChatResponse = async (incomingChatDiv) => {
             
             conversationHistory.push({"role": "assistant", "content": fullMessage})
              // Again, check if the length of the array is greater than 3
-             if (conversationHistory.length > 3) {
-                // If it is, remove the first element
-                conversationHistory.shift();
-             }
+             while (conversationHistory.length >  3 && conversationHistory[1].role !== "system") {
+                conversationHistory.shift(); // Remove the oldest message
+            }    
           }
       }
   } catch (error) {
@@ -139,6 +143,10 @@ const handleOutgoingChat = () => {
     // Add user's message to conversation history
     conversationHistory.push({role: "user", content: userText});
 
+    while (conversationHistory.length >  3 && conversationHistory[1].role !== "system") {
+        conversationHistory.shift(); // Remove the oldest message
+    }
+
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
 
@@ -158,6 +166,7 @@ const handleOutgoingChat = () => {
 
  deleteButton.addEventListener("click", () => {
     if(confirm("Are you sure you want to delete all the chats?")) {
+        // Reset the conversation history to only include the system prompt
         conversationHistory = [systemPrompt];
         loadDataFromLocalstorage();
     }
@@ -184,6 +193,10 @@ const handleOutgoingChat = () => {
  });
 
  const fetchConversationHistory = () => {
+    if (!conversationHistory[0] || conversationHistory[0].role !== "system") {
+        conversationHistory.unshift(systemPrompt);
+    }
+
     // Send conversationHistory array to wherever you need it
     console.log(conversationHistory);
  }
