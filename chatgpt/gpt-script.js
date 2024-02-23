@@ -16,7 +16,7 @@ const loadDataFromLocalstorage = () => {
 
     const defaultText = `<div class="default-text">
                             <h1>DoxrGPT <small><small>v3.3</small></small></h1>
-                            <p>Start a conversation with DoxrGPT - Powered by Gemma 7B<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
+                            <p>Start a conversation with DoxrGPT - Powered by Pygmalion (StoWrite)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     chatContainer.innerHTML = defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -46,7 +46,7 @@ const getChatResponse = async (incomingChatDiv) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemma-7b-it",
+          model: "DeepInfra/pygmalion-13b-4bit-128g",
           messages: conversationHistory,
           temperature: 0.2,
           n: 1,
