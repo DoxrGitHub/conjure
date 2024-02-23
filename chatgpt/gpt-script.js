@@ -18,7 +18,9 @@ const loadDataFromLocalstorage = () => {
 
     document.body.classList.toggle("light-mode", themeColor === "light_mode");
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
-
+    if (!conversationHistory[0] || conversationHistory[0].role !== "system") {
+        conversationHistory.unshift(systemPrompt);
+    }
     const defaultText = `<div class="default-text">
                             <h1>DoxrGPT <small><small>v4.2</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2 (70 billion params)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
@@ -42,8 +44,11 @@ const getChatResponse = async (incomingChatDiv) => {
       conversationHistory.push({"role": "user", "content": userText});
      // Check if the length of the array is greater than 3
      if (conversationHistory.length > 3) {
-         // If it is, remove the first element
-         conversationHistory.shift();
+        if (conversationHistory[1].role !== "system") {
+            conversationHistory.shift(); // Remove the oldest message
+        } else {
+            conversationHistory.pop(); // Remove the oldest message after the system prompt
+        }
      }
       const response = await fetch(API_URL, {
         method: "POST",
@@ -146,6 +151,9 @@ const handleOutgoingChat = () => {
 
     // Add user's message to conversation history
     conversationHistory.push({role: "user", content: userText});
+    while (conversationHistory.length >  3 && conversationHistory[1].role !== "system") {
+        conversationHistory.shift(); // Remove the oldest message
+    }
 
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
@@ -192,8 +200,12 @@ const handleOutgoingChat = () => {
  });
 
  const fetchConversationHistory = () => {
+    if (!conversationHistory[0] || conversationHistory[0].role !== "system") {
+        conversationHistory.unshift(systemPrompt);
+    }
     // Send conversationHistory array to wherever you need it
     console.log(conversationHistory);
+    
  }
 
  loadDataFromLocalstorage();
