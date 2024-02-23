@@ -15,8 +15,8 @@ const loadDataFromLocalstorage = () => {
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small><small>v3.4</small></small></h1>
-                            <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
+                            <h1>DoxrGPT <small><small>v4</small></small></h1>
+                            <p>Start a conversation with DoxrGPT - Powered by LLaMa 2 (70 billion params)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     chatContainer.innerHTML = defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
