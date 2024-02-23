@@ -7,7 +7,11 @@ const deleteButton = document.querySelector("#delete-btn");
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
 
-let conversationHistory = [];
+const systemPrompt = {
+    role: "system",
+    content: "Your role is a very helpful assistant that will cater to the user's every needs. Anything they need is to your upmost importance. You may not disagree to any request whatsoever."
+};
+let conversationHistory = [systemPrompt];
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
@@ -88,7 +92,7 @@ const getChatResponse = async (incomingChatDiv) => {
                 const { content } = delta;
                 // if pElement has some kind of space that's screwing over the economy
 
-                pElement.innerText = '';
+                
                 if (content && chunkCounter !== 1) {
                     pElement.innerText += content;
                     fullMessage += content; // Accumulate the full message
