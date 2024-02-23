@@ -66,7 +66,7 @@ const getChatResponse = async (incomingChatDiv) => {
       incomingChatDiv.querySelector(".typing-animation").remove();
       incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
       pElement.innerText = "";
-      pElement.innerHTML = "";
+      pElement.innerHTML = "DoxrGPT:";
       let chunkCounter = 0;
       while (true) {
           const { done, value } = await reader.read();
