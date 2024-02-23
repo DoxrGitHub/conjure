@@ -15,7 +15,7 @@ const loadDataFromLocalstorage = () => {
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small><small>v3.3</small></small></h1>
+                            <h1>DoxrGPT <small><small>v3.4</small></small></h1>
                             <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     chatContainer.innerHTML = defaultText;
@@ -46,7 +46,7 @@ const getChatResponse = async (incomingChatDiv) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "meta-llama/Llama-2-13b-chat-hf",
+          model: "meta-llama/Llama-2-70b-chat-hf",
           messages: conversationHistory,
           temperature: 0.2,
           n: 1,
