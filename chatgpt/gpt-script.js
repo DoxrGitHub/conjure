@@ -3,25 +3,20 @@ const sendButton = document.querySelector("#send-btn");
 const chatContainer = document.querySelector(".chat-container");
 const themeButton = document.querySelector("#theme-btn");
 const deleteButton = document.querySelector("#delete-btn");
-const systemPrompt = {
-    role: "system",
-    content: "Be a helpful assistant."
-};
+
 let userText = null;
 const API_KEY = "sk-256ee7bc51954e8ob310ec7a2061c179";
-let conversationHistory = [systemPrompt];
+let conversationHistory = [];
 
 const loadDataFromLocalstorage = () => {
     const themeColor = localStorage.getItem("themeColor");
 
     document.body.classList.toggle("light-mode", themeColor === "light_mode");
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
-    if (!conversationHistory[0] || conversationHistory[0].role !== "system") {
-        conversationHistory.unshift(systemPrompt);
-    }
+
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small><small>v3.6</small></small></h1>
-                            <p>Start a conversation with DoxrGPT - Powered by LLaMa 2 (70b)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
+                            <h1>DoxrGPT <small><small>v3.3</small></small></h1>
+                            <p>Start a conversation with DoxrGPT - Powered by LLaMa 2<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     chatContainer.innerHTML = defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -51,7 +46,7 @@ const getChatResponse = async (incomingChatDiv) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "DeepInfra/pygmalion-13b-4bit-128g",
+          model: "meta-llama/Llama-2-13b-chat-hf",
           messages: conversationHistory,
           temperature: 0.2,
           n: 1,
@@ -98,9 +93,10 @@ const getChatResponse = async (incomingChatDiv) => {
             
             conversationHistory.push({"role": "assistant", "content": fullMessage})
              // Again, check if the length of the array is greater than 3
-             while (conversationHistory.length >  3 && conversationHistory[1].role !== "system") {
-                conversationHistory.shift(); // Remove the oldest message
-            }    
+             if (conversationHistory.length > 3) {
+                // If it is, remove the first element
+                conversationHistory.shift();
+             }
           }
       }
   } catch (error) {
@@ -143,10 +139,6 @@ const handleOutgoingChat = () => {
     // Add user's message to conversation history
     conversationHistory.push({role: "user", content: userText});
 
-    while (conversationHistory.length >  3 && conversationHistory[1].role !== "system") {
-        conversationHistory.shift(); // Remove the oldest message
-    }
-
     chatInput.value = "";
     chatInput.style.height = `${initialInputHeight}px`;
 
@@ -166,7 +158,6 @@ const handleOutgoingChat = () => {
 
  deleteButton.addEventListener("click", () => {
     if(confirm("Are you sure you want to delete all the chats?")) {
-        // Reset the conversation history to only include the system prompt
         conversationHistory = [systemPrompt];
         loadDataFromLocalstorage();
     }
@@ -193,10 +184,6 @@ const handleOutgoingChat = () => {
  });
 
  const fetchConversationHistory = () => {
-    if (!conversationHistory[0] || conversationHistory[0].role !== "system") {
-        conversationHistory.unshift(systemPrompt);
-    }
-
     // Send conversationHistory array to wherever you need it
     console.log(conversationHistory);
  }
