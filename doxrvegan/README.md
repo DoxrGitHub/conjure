@@ -10,5 +10,3 @@
 5. Right-click on tab 1 and press the duplicate button.
 6. Go to tab 2 and press the switch that says "Allow access to file URLs" (multiple times). One of the tabs that were duplicated will close, the other won't. DON'T CLOSE THE TAB THATS LOADING.
 7. close the google tab, and close tab 1. you should be unblocked
-
-By doxr.
