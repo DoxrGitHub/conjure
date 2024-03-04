@@ -1,4 +1,4 @@
-// Function to fetch the JSON file and process the data
+/* // Function to fetch the JSON file and process the data
 function fetchGamesAndCreateElements() {
     // Fetch the JSON file
     fetch('games.json')
@@ -41,3 +41,4 @@ function fetchGamesAndCreateElements() {
   // Call the function to start the process
   fetchGamesAndCreateElements();
   
+  */
