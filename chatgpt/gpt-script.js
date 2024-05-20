@@ -22,8 +22,8 @@ const loadDataFromLocalstorage = () => {
         conversationHistory.unshift(systemPrompt);
     }
     const defaultText = `<div class="default-text">
-                            <h1>DoxrGPT <small><small>v4.4</small></small></h1>
-                            <p>Start a conversation with DoxrGPT - Powered by LLaMa 2 (70 billion params)<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
+                            <h1>DoxrGPT <small><small>v5.1</small></small></h1>
+                            <p>Start a conversation with DoxrGPT - Powered by LLaMa 3 (70 billion params), the smartest AI model yet.<br>Toggle Light Mode and Dark Mode, or clear your conversations.</p>
                         </div>`
     chatContainer.innerHTML = defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
@@ -56,7 +56,7 @@ const getChatResponse = async (incomingChatDiv) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "meta-llama/Llama-2-70b-chat-hf",
+          model: "meta-llama/Meta-Llama-3-70B-Instruct",
           messages: conversationHistory,
           temperature: 0.2,
           n: 1,
